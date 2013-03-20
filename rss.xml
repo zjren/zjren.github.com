@@ -3,10 +3,19 @@
   <channel>
     <title>蓦然回首</title>
     <link>http://rzj.me</link>
-    <pubDate>2013-03-20 06:31:52 +0800</pubDate>
+    <pubDate>2013-03-20 07:45:18 +0800</pubDate>
+    <item>
+      <title>Markdown+Gor+Github，基于Github的免费博客诞生了</title>
+      <link>http://rzj.me/blog/2013/03/markdown-gor-github.html</link>
+      <pubDate>2013-03-20 12:00:00 +0800</pubDate>
+      <description>&lt;p&gt;本博客采用&lt;a href=&#34;http://wowubuntu.com/markdown&#34;&gt;MarkDown&lt;/a&gt;语法格式来写博客，用Golang编写的静态博客引擎&lt;a href=&#34;https://github.com/wendal/gor&#34;&gt;gor&lt;/a&gt;生成静态博客文章，并将网站页面托管于&lt;a href=&#34;https://github.com/&#34;&gt;github&lt;/a&gt; 之上!&lt;/p&gt;
+
+&lt;p&gt;这样的组合写博客简直棒极了&lt;/p&gt;
+</description>
+    </item>
     <item>
       <title>Mysql索引建立和使用的基本原则</title>
-      <link>http://rzj.me/blog/2013/03/20/the-way-to-build-and-use-mysql-index.html</link>
+      <link>http://rzj.me/blog/2013/03/the-way-to-build-and-use-mysql-index.html</link>
       <pubDate>2013-03-20 12:00:00 +0800</pubDate>
       <description>&lt;p&gt;Mysql索引建立和使用的基本原则&lt;/p&gt;
 
@@ -21,15 +30,6 @@
 &lt;/ul&gt;
 
 &lt;p&gt;&amp;ndash;摘自&lt;a href=&#34;http://book.douban.com/subject/20370984/&#34;&gt;《PHP核心技术与最佳实践》&lt;/a&gt;&lt;/p&gt;
-</description>
-    </item>
-    <item>
-      <title>Markdown+Gor+Github，基于Github的免费博客诞生了</title>
-      <link>http://rzj.me/blog/2013/03/20/markdown-gor-github.html</link>
-      <pubDate>2013-03-20 12:00:00 +0800</pubDate>
-      <description>&lt;p&gt;本博客采用&lt;a href=&#34;http://wowubuntu.com/markdown&#34;&gt;MarkDown&lt;/a&gt;语法格式来写博客，用Golang编写的静态博客引擎&lt;a href=&#34;https://github.com/wendal/gor&#34;&gt;gor&lt;/a&gt;生成静态博客文章，并将网站页面托管于&lt;a href=&#34;https://github.com/&#34;&gt;github&lt;/a&gt; 之上!&lt;/p&gt;
-
-&lt;p&gt;这样的组合写博客简直棒极了&lt;/p&gt;
 </description>
     </item>
   </channel>
