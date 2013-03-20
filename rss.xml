@@ -3,16 +3,7 @@
   <channel>
     <title>蓦然回首</title>
     <link>http://rzj.me</link>
-    <pubDate>2013-03-20 07:51:49 +0800</pubDate>
-    <item>
-      <title>Markdown+Gor+Github，基于Github的免费博客诞生了</title>
-      <link>http://rzj.me/blog/2013/03/markdown-gor-github.html</link>
-      <pubDate>2013-03-20 12:00:00 +0800</pubDate>
-      <description>&lt;p&gt;本博客采用&lt;a href=&#34;http://wowubuntu.com/markdown&#34;&gt;MarkDown&lt;/a&gt;语法格式来写博客，用Golang编写的静态博客引擎&lt;a href=&#34;https://github.com/wendal/gor&#34;&gt;gor&lt;/a&gt;生成静态博客文章，并将网站页面托管于&lt;a href=&#34;https://github.com/&#34;&gt;github&lt;/a&gt; 之上!&lt;/p&gt;
-
-&lt;p&gt;这样的组合写博客简直棒极了&lt;/p&gt;
-</description>
-    </item>
+    <pubDate>2013-03-20 08:33:08 +0800</pubDate>
     <item>
       <title>Mysql索引建立和使用的基本原则</title>
       <link>http://rzj.me/blog/2013/03/the-way-to-build-and-use-mysql-index.html</link>
@@ -30,6 +21,99 @@
 &lt;/ul&gt;
 
 &lt;p&gt;&amp;ndash;摘自&lt;a href=&#34;http://book.douban.com/subject/20370984/&#34;&gt;《PHP核心技术与最佳实践》&lt;/a&gt;&lt;/p&gt;
+</description>
+    </item>
+    <item>
+      <title>Mysql常见存储引擎的特点和Mysql选择存储引擎的基本原则</title>
+      <link>http://rzj.me/blog/2013/03/choose-store-engine-for-mysql.html</link>
+      <pubDate>2013-03-20 12:00:00 +0800</pubDate>
+      <description>&lt;p&gt;Mysql中常见的三种引擎特点&lt;/p&gt;
+
+&lt;p&gt;MyISAM引擎&lt;/p&gt;
+
+&lt;blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;用途: 快读&lt;/li&gt;
+&lt;li&gt;锁: 全表锁定&lt;/li&gt;
+&lt;li&gt;持久性: 基于表恢复&lt;/li&gt;
+&lt;li&gt;事务特性: 不支持&lt;/li&gt;
+&lt;li&gt;支持索引类型: B-tree/FullText/R-tree&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;Memory引擎&lt;/p&gt;
+
+&lt;blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;用途: 内存数据&lt;/li&gt;
+&lt;li&gt;锁: 全表锁定&lt;/li&gt;
+&lt;li&gt;持久性: 无磁盘I/O，无可持久性&lt;/li&gt;
+&lt;li&gt;事务特性: 不支持&lt;/li&gt;
+&lt;li&gt;支持索引类型: Hash/B-tree&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;InnoDb引擎&lt;/p&gt;
+
+&lt;blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;用途: 完整的事务支持&lt;/li&gt;
+&lt;li&gt;锁: 多种隔离级别的行锁&lt;/li&gt;
+&lt;li&gt;持久性: 基于日志的恢复&lt;/li&gt;
+&lt;li&gt;事务特性: 支持&lt;/li&gt;
+&lt;li&gt;支持索引类型: Hash/B-tree&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;Mysql选择存储引擎的基本原则&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;采用MyISAM引擎&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;blockquote&gt;
+&lt;ol&gt;
+&lt;li&gt;R/W&amp;gt;100:1，且update较少&lt;/li&gt;
+&lt;li&gt;并发不高，且不需要事务&lt;/li&gt;
+&lt;li&gt;表数据量小&lt;/li&gt;
+&lt;li&gt;硬件资源有限&lt;/li&gt;
+&lt;/ol&gt;
+&lt;/blockquote&gt;
+
+&lt;ul&gt;
+&lt;li&gt;采用InnoDB引擎&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;blockquote&gt;
+&lt;ol&gt;
+&lt;li&gt;R/W较小，频繁更新大字段&lt;/li&gt;
+&lt;li&gt;表数据量超过1000万，并发高&lt;/li&gt;
+&lt;li&gt;安全性和可靠性要求高&lt;/li&gt;
+&lt;/ol&gt;
+&lt;/blockquote&gt;
+
+&lt;ul&gt;
+&lt;li&gt;采用Memory引擎&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;blockquote&gt;
+&lt;ol&gt;
+&lt;li&gt;有足够的内存&lt;/li&gt;
+&lt;li&gt;对数据的一致性要求不高，如在线人数和Session等应用&lt;/li&gt;
+&lt;li&gt;需要定期归档的数据&lt;/li&gt;
+&lt;/ol&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;&amp;ndash;摘自&lt;a href=&#34;http://book.douban.com/subject/20370984/&#34;&gt;《PHP核心技术与最佳实践》&lt;/a&gt;&lt;/p&gt;
+</description>
+    </item>
+    <item>
+      <title>Markdown+Gor+Github，基于Github的免费博客诞生了</title>
+      <link>http://rzj.me/blog/2013/03/markdown-gor-github.html</link>
+      <pubDate>2013-03-19 12:00:00 +0800</pubDate>
+      <description>&lt;p&gt;本博客采用&lt;a href=&#34;http://wowubuntu.com/markdown&#34;&gt;MarkDown&lt;/a&gt;语法格式来写博客，用Golang编写的静态博客引擎&lt;a href=&#34;https://github.com/wendal/gor&#34;&gt;gor&lt;/a&gt;生成静态博客文章，并将网站页面托管于&lt;a href=&#34;https://github.com/&#34;&gt;github&lt;/a&gt; 之上!&lt;/p&gt;
+
+&lt;p&gt;这样的组合写博客简直棒极了&lt;/p&gt;
 </description>
     </item>
   </channel>

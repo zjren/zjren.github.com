@@ -4,13 +4,18 @@
 		<loc>http://rzj.me/</loc>
 	</url>
 	<url>
-		<loc>http://rzj.me/blog/2013/03/markdown-gor-github.html</loc>
+		<loc>http://rzj.me/blog/2013/03/the-way-to-build-and-use-mysql-index.html</loc>
 		<lastmod>2013-03-20</lastmod>
 		<changefreq>weekly</changefreq>
 	</url>
 	<url>
-		<loc>http://rzj.me/blog/2013/03/the-way-to-build-and-use-mysql-index.html</loc>
+		<loc>http://rzj.me/blog/2013/03/choose-store-engine-for-mysql.html</loc>
 		<lastmod>2013-03-20</lastmod>
+		<changefreq>weekly</changefreq>
+	</url>
+	<url>
+		<loc>http://rzj.me/blog/2013/03/markdown-gor-github.html</loc>
+		<lastmod>2013-03-19</lastmod>
 		<changefreq>weekly</changefreq>
 	</url>
 </urlset>
