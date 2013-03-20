@@ -1,10 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 	<url>
-		<loc>http://blog.rzj.me/</loc>
+		<loc>http://rzj.me/</loc>
 	</url>
 	<url>
-		<loc>http://blog.rzj.me/2013/markdown-gor-github.html</loc>
+		<loc>http://rzj.me/blog/2013/03/20/the-way-to-build-and-use-mysql-index.html</loc>
+		<lastmod>2013-03-20</lastmod>
+		<changefreq>weekly</changefreq>
+	</url>
+	<url>
+		<loc>http://rzj.me/blog/2013/03/20/markdown-gor-github.html</loc>
 		<lastmod>2013-03-20</lastmod>
 		<changefreq>weekly</changefreq>
 	</url>

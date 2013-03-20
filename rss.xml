@@ -2,11 +2,30 @@
 <rss version="2.0">
   <channel>
     <title>蓦然回首</title>
-    <link>http://blog.rzj.me</link>
-    <pubDate>2013-03-20 05:06:09 +0800</pubDate>
+    <link>http://rzj.me</link>
+    <pubDate>2013-03-20 06:31:52 +0800</pubDate>
+    <item>
+      <title>Mysql索引建立和使用的基本原则</title>
+      <link>http://rzj.me/blog/2013/03/20/the-way-to-build-and-use-mysql-index.html</link>
+      <pubDate>2013-03-20 12:00:00 +0800</pubDate>
+      <description>&lt;p&gt;Mysql索引建立和使用的基本原则&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;合理设计和使用索引&lt;/li&gt;
+&lt;li&gt;在关键字段的索引上，建与不建索引，查询速度想产近100倍&lt;/li&gt;
+&lt;li&gt;差的索引和没有索引效果一样&lt;/li&gt;
+&lt;li&gt;索引并非越多越好，因为维护索引需要成本&lt;/li&gt;
+&lt;li&gt;每个表的索引应在5个以下，应合理利用部分索引和联合索引&lt;/li&gt;
+&lt;li&gt;不再结果集中的结果单一的列上建立索引。比如性别字段只有0和1两种结果集，在这个字段上建索引并不会有太多帮助&lt;/li&gt;
+&lt;li&gt;建索引的字段结果集最好分布均匀，或者符合正态分布&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;&amp;ndash;摘自&lt;a href=&#34;http://book.douban.com/subject/20370984/&#34;&gt;《PHP核心技术与最佳实践》&lt;/a&gt;&lt;/p&gt;
+</description>
+    </item>
     <item>
       <title>Markdown+Gor+Github，基于Github的免费博客诞生了</title>
-      <link>http://blog.rzj.me/2013/markdown-gor-github.html</link>
+      <link>http://rzj.me/blog/2013/03/20/markdown-gor-github.html</link>
       <pubDate>2013-03-20 12:00:00 +0800</pubDate>
       <description>&lt;p&gt;本博客采用&lt;a href=&#34;http://wowubuntu.com/markdown&#34;&gt;MarkDown&lt;/a&gt;语法格式来写博客，用Golang编写的静态博客引擎&lt;a href=&#34;https://github.com/wendal/gor&#34;&gt;gor&lt;/a&gt;生成静态博客文章，并将网站页面托管于&lt;a href=&#34;https://github.com/&#34;&gt;github&lt;/a&gt; 之上!&lt;/p&gt;
 
