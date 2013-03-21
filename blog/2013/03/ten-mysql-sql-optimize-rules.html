@@ -2,7 +2,7 @@
 <html lang="en">
   <head>
     <meta charset="utf-8">
-    <title>首页-蓦然回首</title>
+    <title>Mysql基本sql语句优化的10个原则-蓦然回首</title>
   
     <meta name="author" content="kisspy">
 
@@ -77,18 +77,13 @@
     <div class="container">
 
       <div class="content">
-        
-<div class="page-header">
-  <h1>首页 </h1>
+        <div class="page-header">
+  <h1>Mysql基本sql语句优化的10个原则 </h1>
 </div>
 
 <div class="row">
-  <div class="span12">
-    
-<div class="post">
-  <h3 class="title"><a href="/blog/2013/03/ten-mysql-sql-optimize-rules.html">Mysql基本sql语句优化的10个原则</a> <span class="date">2013-03-21</span></h3>
-
-  <p>Mysql基本sql语句优化的10个原则</p>
+  <div class="span8">
+    <p>Mysql基本sql语句优化的10个原则</p>
 
 <ol>
 <li><p>尽量避免在列上进行运算，这样会导致索引失效。</p>
@@ -121,89 +116,78 @@ select * from t where name&gt;=&lsquo;de&rsquo; and name&lt;&lsquo;df&rsquo;</p>
 
 <li><p>避免使用NULL</p></li>
 
-<li><p>不要使用count(id),而应该是count(*)</p></li>
-</ol>
+<li><p>不要使用count(id),而应该是count(*)</p>
 
-
-  <div class="more">
-    <a href="/blog/2013/03/ten-mysql-sql-optimize-rules.html" class="btn">read more..</a>
-  </div>
-</div>
-
-<div class="post">
-  <h3 class="title"><a href="/blog/2013/03/the-way-to-build-and-use-mysql-index.html">Mysql索引建立和使用的基本原则</a> <span class="date">2013-03-20</span></h3>
-
-  <p>Mysql索引建立和使用的基本原则</p>
-
+<blockquote>
 <ul>
-<li>合理设计和使用索引</li>
-<li>在关键字段的索引上，建与不建索引，查询速度想产近100倍</li>
-<li>差的索引和没有索引效果一样</li>
-<li>索引并非越多越好，因为维护索引需要成本</li>
-<li>每个表的索引应在5个以下，应合理利用部分索引和联合索引</li>
-<li>不再结果集中的结果单一的列上建立索引。比如性别字段只有0和1两种结果集，在这个字段上建索引并不会有太多帮助</li>
-<li>建索引的字段结果集最好分布均匀，或者符合正态分布</li>
+<li>任何情况下SELECT COUNT(*) FROM tablename是最优选择；</li>
+<li>尽量减少SELECT COUNT(*) FROM tablename WHERE COL = &lsquo;value’ 这种查询；</li>
+<li>杜绝SELECT COUNT(COL) FROM tablename的出现。</li>
 </ul>
+</blockquote></li>
+
+<li><p>不要做无谓的排序操作，尽可能在索引中完成排序</p></li>
+</ol>
 
 <p>&ndash;摘自<a href="http://book.douban.com/subject/20370984/">《PHP核心技术与最佳实践》</a></p>
 
+    <hr>
+    <div class="pagination">
+      <ul>
+        <ul>
+          
+          
+            <li class="prev disabled"><a>&larr; Previous</a></li>
+          
 
-  <div class="more">
-    <a href="/blog/2013/03/the-way-to-build-and-use-mysql-index.html" class="btn">read more..</a>
+            <li><a href="/archive">Archive</a></li>
+
+          
+            <li class="next"><a href="/blog/2013/03/the-way-to-build-and-use-mysql-index.html" title="Mysql索引建立和使用的基本原则">Next &rarr;</a></li>
+          
+          
+        </ul>
+      </ul>
+    </div>
+    <hr>
+    
+<div id="disqus_thread"></div>
+<script>
+    var disqus_developer = 1;
+    var disqus_shortname = 'rzj'; // required: replace example with your forum shortname
+    /* * * DON'T EDIT BELOW THIS LINE * * */
+    (function() {
+        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+        dsq.src = 'http://' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+<a href="http://disqus.com" class="dsq-brlink">blog comments powered by <span class="logo-disqus">Disqus</span></a>
+
   </div>
-</div>
-
-<div class="post">
-  <h3 class="title"><a href="/blog/2013/03/choose-store-engine-for-mysql.html">Mysql常见存储引擎的特点和Mysql选择存储引擎的基本原则</a> <span class="date">2013-03-20</span></h3>
-
-  <p>Mysql中常见的三种引擎特点</p>
-
-<p>MyISAM引擎</p>
-
-<blockquote>
-<ul>
-<li>用途: 快读</li>
-<li>锁: 全表锁定</li>
-<li>持久性: 基于表恢复</li>
-<li>事务特性: 不支持</li>
-<li>支持索引类型: B-tree/FullText/R-tree</li>
-</ul>
-</blockquote>
-
-<p>Memory引擎</p>
-
-<blockquote>
-<ul>
-<li>用途: 内存数据</li>
-<li>锁: 全表锁定</li>
-<li>持久性: 无磁盘I/O，无可持久性</li>
-<li>事务特性: 不支持</li>
-<li>支持索引类型: Hash/B-tree</li>
-</ul>
-</blockquote>
-
-<p>InnoDb引擎</p>
-
-
-  <div class="more">
-    <a href="/blog/2013/03/choose-store-engine-for-mysql.html" class="btn">read more..</a>
-  </div>
-</div>
-
-<div class="post">
-  <h3 class="title"><a href="/blog/2013/03/markdown-gor-github.html">Markdown+Gor+Github，基于Github的免费博客诞生了</a> <span class="date">2013-03-19</span></h3>
-
-  <p>本博客采用<a href="http://wowubuntu.com/markdown">MarkDown</a>语法格式来写博客，用Golang编写的静态博客引擎<a href="https://github.com/wendal/gor">gor</a>生成静态博客文章，并将网站页面托管于<a href="https://github.com/">github</a> 之上!</p>
-
-<p>这样的组合写博客简直棒极了</p>
-
-
-  <div class="more">
-    <a href="/blog/2013/03/markdown-gor-github.html" class="btn">read more..</a>
-  </div>
-</div>
-
-
+  
+  <div class="span4">
+    <h4>Published</h4>
+    <div class="date"><span>2013-03-21</span></div>
+    <br>
+    <h4>Categories</h4>
+    <ul class="tag_box">
+    
+      <li>
+  <a href="/categories/#Mysql-ref">Mysql <span>3</span></a>
+</li>
+    
+    </ul>
+    <br>
+    <h4>Tags</h4>
+    <ul class="tag_box">
+    
+      <li>
+  <a href="/tags/#Mysql-ref">Mysql <span>3</span></a>
+</li>
+    
+    </ul>
   </div>
 </div>
 

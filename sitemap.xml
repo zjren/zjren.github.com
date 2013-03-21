@@ -4,6 +4,11 @@
 		<loc>http://rzj.me/</loc>
 	</url>
 	<url>
+		<loc>http://rzj.me/blog/2013/03/ten-mysql-sql-optimize-rules.html</loc>
+		<lastmod>2013-03-21</lastmod>
+		<changefreq>weekly</changefreq>
+	</url>
+	<url>
 		<loc>http://rzj.me/blog/2013/03/the-way-to-build-and-use-mysql-index.html</loc>
 		<lastmod>2013-03-20</lastmod>
 		<changefreq>weekly</changefreq>
