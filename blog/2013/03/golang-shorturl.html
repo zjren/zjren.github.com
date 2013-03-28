@@ -2,7 +2,7 @@
 <html lang="en">
   <head>
     <meta charset="utf-8">
-    <title>Mysql基本sql语句优化的10个原则-蓦然回首</title>
+    <title>Go语言实现的短网址算法-蓦然回首</title>
   
     <meta name="author" content="kisspy">
     <link rel="shortcut icon" href="/favicon.ico">
@@ -71,72 +71,86 @@
 
       <div class="content">
         <div class="page-header">
-  <h1>Mysql基本sql语句优化的10个原则 </h1>
+  <h1>Go语言实现的短网址算法 </h1>
 </div>
 
 <div class="row">
   <div class="span8">
-    <p>Mysql基本sql语句优化的10个原则</p>
+    <p>一直想做个自己的短网址服务，现在刚好在学习go语言，所以就决定用go来写这个应用练练手。</p>
 
+<p>看了网上很多短网址算法，比较著名的算法要数10进制与62进制转换算法，转换步骤如下：</p>
+
+<blockquote>
 <ol>
-<li><p>尽量避免在列上进行运算，这样会导致索引失效。</p>
-
-<blockquote>
-<p>例如原句为：<br />
-select * from t where YEAR(d)&gt;=2011;<br />
-优化为：<br />
-select * from t where d&gt;=&lsquo;2011-01-01&rsquo;;</p>
-</blockquote></li>
-
-<li><p>使用JOIN时，因该用小结果集驱动大结果集，同时把复杂的JOIN拆分成多个Query。</p></li>
-
-<li><p>注意LIKE模糊查询的使用，避免%%</p>
-
-<blockquote>
-<p>例如原句为：<br />
-select * from t where name like &lsquo;%de%&rsquo;<br />
-优化位：<br />
-select * from t where name&gt;=&lsquo;de&rsquo; and name&lt;&lsquo;df&rsquo;</p>
-</blockquote></li>
-
-<li><p>仅列出需要查询的字段，这里主要考虑节省内存</p></li>
-
-<li><p>使用批量插入语句节省交互</p></li>
-
-<li><p>Limit的基数比较大时使用Between</p></li>
-
-<li><p>不要使用rand函数获取多条随机记录</p></li>
-
-<li><p>避免使用NULL</p></li>
-
-<li><p>不要使用count(id),而应该是count(*)</p>
-
-<blockquote>
-<ul>
-<li>任何情况下SELECT COUNT(*) FROM tablename是最优选择；</li>
-<li>尽量减少SELECT COUNT(*) FROM tablename WHERE COL = &lsquo;value’ 这种查询；</li>
-<li>杜绝SELECT COUNT(COL) FROM tablename的出现。</li>
-</ul>
-</blockquote></li>
-
-<li><p>不要做无谓的排序操作，尽可能在索引中完成排序</p></li>
+<li>准备一个数组，存放a-zA-Z0-9这62个字符</li>
+<li>自定义网址前后缀，然后连接成一个字符串并进行md5加密，生成32位的签名串</li>
+<li>将长网址md5生成32位签名串,分为4段, 每段8个字节;</li>
+<li>对这四段循环处理, 取8个字节, 将他看成16进制串与0x3fffffff(30位1)与操作, 即超过30位的忽略处理;</li>
+<li>这30位分成6段, 每5位的数字作为字母表的索引取得特定字符, 依次进行获得6位字符串;</li>
+<li>总的md5串可以获得4个6位串; 取里面的任意一个就可作为这个长url的短url地址;</li>
 </ol>
+</blockquote>
 
-<p>&ndash;摘自<a href="http://book.douban.com/subject/20370984/">《PHP核心技术与最佳实践》</a></p>
+<p>代码如下：</p>
+
+<pre><code>func ShortUrl(url string, prefix string, suffix string) [4]string {
+
+    str := prefix + url + suffix
+
+    chars := [62]byte{'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h',
+        'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p',
+        'q', 'r', 's', 't', 'u', 'v', 'w', 'x',
+        'y', 'z', '0', '1', '2', '3', '4', '5',
+        '6', '7', '8', '9', 'A', 'B', 'C', 'D',
+        'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L',
+        'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T',
+        'U', 'V', 'W', 'X', 'Y', 'Z'}
+
+    md5str := Md5Encode(str)
+    hexstr := []byte(md5str)
+
+    var resUrl [4]string
+
+    for i := 0; i &lt; 4; i++ {
+        j := i * 8
+        k := j + 8
+        s := &quot;0x&quot; + string(hexstr[j:k])
+        hexInt, _ := strconv.ParseInt(s, 0, 64)
+        hexInt = 0x3FFFFFFF &amp; hexInt
+
+        var outChars string = &quot;&quot;
+        for n := 0; n &lt; 6; n++ {
+                    index := 0x0000003D &amp; hexInt
+                    outChars = outChars + string(chars[index])
+                    hexInt = hexInt &gt;&gt; 5
+                }
+        resUrl[i] = outChars
+    }
+    return resUrl
+}
+
+func Md5Encode(str string) string {
+    h := md5.New()
+    io.WriteString(h, str)
+    buffer := bytes.NewBuffer(nil)
+    fmt.Fprintf(buffer, &quot;%x&quot;, h.Sum(nil))
+    return buffer.String()
+}
+</code></pre>
 
     <hr>
     <div class="pagination">
       <ul>
         <ul>
           
-            <li class="prev"><a href="/blog/2013/03/golang-shorturl.html" title="Go语言实现的短网址算法">&larr; Previous</a></li>
           
+            <li class="prev disabled"><a>&larr; Previous</a></li>
           
 
             <li><a href="/archive">Archive</a></li>
 
           
-            <li class="next"><a href="/blog/2013/03/choose-store-engine-for-mysql.html" title="Mysql常见存储引擎的特点和Mysql选择存储引擎的基本原则">Next &rarr;</a></li>
+            <li class="next"><a href="/blog/2013/03/ten-mysql-sql-optimize-rules.html" title="Mysql基本sql语句优化的10个原则">Next &rarr;</a></li>
           
           
         </ul>
@@ -162,13 +176,13 @@ select * from t where name&gt;=&lsquo;de&rsquo; and name&lt;&lsquo;df&rsquo;</p>
   
   <div class="span4">
     <h4>Published</h4>
-    <div class="date"><span>2013-03-21</span></div>
+    <div class="date"><span>2013-03-28</span></div>
     <br>
     <h4>Categories</h4>
     <ul class="tag_box">
     
       <li>
-  <a href="/categories/#Mysql-ref">Mysql <span>3</span></a>
+  <a href="/categories/#Go-ref">Go <span>1</span></a>
 </li>
     
     </ul>
@@ -177,7 +191,7 @@ select * from t where name&gt;=&lsquo;de&rsquo; and name&lt;&lsquo;df&rsquo;</p>
     <ul class="tag_box">
     
       <li>
-  <a href="/tags/#Mysql-ref">Mysql <span>3</span></a>
+  <a href="/tags/#Go-ref">Go <span>1</span></a>
 </li>
     
     </ul>

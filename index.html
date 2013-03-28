@@ -79,6 +79,46 @@
   <div class="span12">
     
 <div class="post">
+  <h3 class="title"><a href="/blog/2013/03/golang-shorturl.html">Go语言实现的短网址算法</a> <span class="date">2013-03-28</span></h3>
+
+  <p>一直想做个自己的短网址服务，现在刚好在学习go语言，所以就决定用go来写这个应用练练手。</p>
+
+<p>看了网上很多短网址算法，比较著名的算法要数10进制与62进制转换算法，转换步骤如下：</p>
+
+<blockquote>
+<ol>
+<li>准备一个数组，存放a-zA-Z0-9这62个字符</li>
+<li>自定义网址前后缀，然后连接成一个字符串并进行md5加密，生成32位的签名串</li>
+<li>将长网址md5生成32位签名串,分为4段, 每段8个字节;</li>
+<li>对这四段循环处理, 取8个字节, 将他看成16进制串与0x3fffffff(30位1)与操作, 即超过30位的忽略处理;</li>
+<li>这30位分成6段, 每5位的数字作为字母表的索引取得特定字符, 依次进行获得6位字符串;</li>
+<li>总的md5串可以获得4个6位串; 取里面的任意一个就可作为这个长url的短url地址;</li>
+</ol>
+</blockquote>
+
+<p>代码如下：</p>
+
+<pre><code>func ShortUrl(url string, prefix string, suffix string) [4]string {
+
+    str := prefix + url + suffix
+
+    chars := [62]byte{'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h',
+        'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p',
+        'q', 'r', 's', 't', 'u', 'v', 'w', 'x',
+        'y', 'z', '0', '1', '2', '3', '4', '5',
+        '6', '7', '8', '9', 'A', 'B', 'C', 'D',
+        'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L',
+        'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T',
+        'U', 'V', 'W', 'X', 'Y', 'Z'}
+</code></pre>
+
+
+  <div class="more">
+    <a href="/blog/2013/03/golang-shorturl.html" class="btn">read more..</a>
+  </div>
+</div>
+
+<div class="post">
   <h3 class="title"><a href="/blog/2013/03/ten-mysql-sql-optimize-rules.html">Mysql基本sql语句优化的10个原则</a> <span class="date">2013-03-21</span></h3>
 
   <p>Mysql基本sql语句优化的10个原则</p>
@@ -124,29 +164,6 @@ select * from t where name&gt;=&lsquo;de&rsquo; and name&lt;&lsquo;df&rsquo;</p>
 </div>
 
 <div class="post">
-  <h3 class="title"><a href="/blog/2013/03/the-way-to-build-and-use-mysql-index.html">Mysql索引建立和使用的基本原则</a> <span class="date">2013-03-20</span></h3>
-
-  <p>Mysql索引建立和使用的基本原则</p>
-
-<ul>
-<li>合理设计和使用索引</li>
-<li>在关键字段的索引上，建与不建索引，查询速度想产近100倍</li>
-<li>差的索引和没有索引效果一样</li>
-<li>索引并非越多越好，因为维护索引需要成本</li>
-<li>每个表的索引应在5个以下，应合理利用部分索引和联合索引</li>
-<li>不再结果集中的结果单一的列上建立索引。比如性别字段只有0和1两种结果集，在这个字段上建索引并不会有太多帮助</li>
-<li>建索引的字段结果集最好分布均匀，或者符合正态分布</li>
-</ul>
-
-<p>&ndash;摘自<a href="http://book.douban.com/subject/20370984/">《PHP核心技术与最佳实践》</a></p>
-
-
-  <div class="more">
-    <a href="/blog/2013/03/the-way-to-build-and-use-mysql-index.html" class="btn">read more..</a>
-  </div>
-</div>
-
-<div class="post">
   <h3 class="title"><a href="/blog/2013/03/choose-store-engine-for-mysql.html">Mysql常见存储引擎的特点和Mysql选择存储引擎的基本原则</a> <span class="date">2013-03-20</span></h3>
 
   <p>Mysql中常见的三种引擎特点</p>
@@ -180,6 +197,29 @@ select * from t where name&gt;=&lsquo;de&rsquo; and name&lt;&lsquo;df&rsquo;</p>
 
   <div class="more">
     <a href="/blog/2013/03/choose-store-engine-for-mysql.html" class="btn">read more..</a>
+  </div>
+</div>
+
+<div class="post">
+  <h3 class="title"><a href="/blog/2013/03/the-way-to-build-and-use-mysql-index.html">Mysql索引建立和使用的基本原则</a> <span class="date">2013-03-20</span></h3>
+
+  <p>Mysql索引建立和使用的基本原则</p>
+
+<ul>
+<li>合理设计和使用索引</li>
+<li>在关键字段的索引上，建与不建索引，查询速度想产近100倍</li>
+<li>差的索引和没有索引效果一样</li>
+<li>索引并非越多越好，因为维护索引需要成本</li>
+<li>每个表的索引应在5个以下，应合理利用部分索引和联合索引</li>
+<li>不再结果集中的结果单一的列上建立索引。比如性别字段只有0和1两种结果集，在这个字段上建索引并不会有太多帮助</li>
+<li>建索引的字段结果集最好分布均匀，或者符合正态分布</li>
+</ul>
+
+<p>&ndash;摘自<a href="http://book.douban.com/subject/20370984/">《PHP核心技术与最佳实践》</a></p>
+
+
+  <div class="more">
+    <a href="/blog/2013/03/the-way-to-build-and-use-mysql-index.html" class="btn">read more..</a>
   </div>
 </div>
 

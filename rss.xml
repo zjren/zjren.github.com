@@ -3,7 +3,74 @@
   <channel>
     <title>蓦然回首</title>
     <link>http://rzj.me</link>
-    <pubDate>2013-03-26 03:14:02 +0800</pubDate>
+    <pubDate>2013-03-28 06:35:15 +0800</pubDate>
+    <item>
+      <title>Go语言实现的短网址算法</title>
+      <link>http://rzj.me/blog/2013/03/golang-shorturl.html</link>
+      <pubDate>2013-03-28 12:00:00 +0800</pubDate>
+      <description>&lt;p&gt;一直想做个自己的短网址服务，现在刚好在学习go语言，所以就决定用go来写这个应用练练手。&lt;/p&gt;
+
+&lt;p&gt;看了网上很多短网址算法，比较著名的算法要数10进制与62进制转换算法，转换步骤如下：&lt;/p&gt;
+
+&lt;blockquote&gt;
+&lt;ol&gt;
+&lt;li&gt;准备一个数组，存放a-zA-Z0-9这62个字符&lt;/li&gt;
+&lt;li&gt;自定义网址前后缀，然后连接成一个字符串并进行md5加密，生成32位的签名串&lt;/li&gt;
+&lt;li&gt;将长网址md5生成32位签名串,分为4段, 每段8个字节;&lt;/li&gt;
+&lt;li&gt;对这四段循环处理, 取8个字节, 将他看成16进制串与0x3fffffff(30位1)与操作, 即超过30位的忽略处理;&lt;/li&gt;
+&lt;li&gt;这30位分成6段, 每5位的数字作为字母表的索引取得特定字符, 依次进行获得6位字符串;&lt;/li&gt;
+&lt;li&gt;总的md5串可以获得4个6位串; 取里面的任意一个就可作为这个长url的短url地址;&lt;/li&gt;
+&lt;/ol&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;代码如下：&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;func ShortUrl(url string, prefix string, suffix string) [4]string {
+
+    str := prefix + url + suffix
+
+    chars := [62]byte{&#39;a&#39;, &#39;b&#39;, &#39;c&#39;, &#39;d&#39;, &#39;e&#39;, &#39;f&#39;, &#39;g&#39;, &#39;h&#39;,
+        &#39;i&#39;, &#39;j&#39;, &#39;k&#39;, &#39;l&#39;, &#39;m&#39;, &#39;n&#39;, &#39;o&#39;, &#39;p&#39;,
+        &#39;q&#39;, &#39;r&#39;, &#39;s&#39;, &#39;t&#39;, &#39;u&#39;, &#39;v&#39;, &#39;w&#39;, &#39;x&#39;,
+        &#39;y&#39;, &#39;z&#39;, &#39;0&#39;, &#39;1&#39;, &#39;2&#39;, &#39;3&#39;, &#39;4&#39;, &#39;5&#39;,
+        &#39;6&#39;, &#39;7&#39;, &#39;8&#39;, &#39;9&#39;, &#39;A&#39;, &#39;B&#39;, &#39;C&#39;, &#39;D&#39;,
+        &#39;E&#39;, &#39;F&#39;, &#39;G&#39;, &#39;H&#39;, &#39;I&#39;, &#39;J&#39;, &#39;K&#39;, &#39;L&#39;,
+        &#39;M&#39;, &#39;N&#39;, &#39;O&#39;, &#39;P&#39;, &#39;Q&#39;, &#39;R&#39;, &#39;S&#39;, &#39;T&#39;,
+        &#39;U&#39;, &#39;V&#39;, &#39;W&#39;, &#39;X&#39;, &#39;Y&#39;, &#39;Z&#39;}
+
+    md5str := Md5Encode(str)
+    hexstr := []byte(md5str)
+
+    var resUrl [4]string
+
+    for i := 0; i &amp;lt; 4; i++ {
+        j := i * 8
+        k := j + 8
+        s := &amp;quot;0x&amp;quot; + string(hexstr[j:k])
+        hexInt, _ := strconv.ParseInt(s, 0, 64)
+        hexInt = 0x3FFFFFFF &amp;amp; hexInt
+
+        var outChars string = &amp;quot;&amp;quot;
+        for n := 0; n &amp;lt; 6; n++ {
+                    index := 0x0000003D &amp;amp; hexInt
+                    outChars = outChars + string(chars[index])
+                    hexInt = hexInt &amp;gt;&amp;gt; 5
+                }
+        resUrl[i] = outChars
+    }
+    return resUrl
+}
+
+func Md5Encode(str string) string {
+    h := md5.New()
+    io.WriteString(h, str)
+    buffer := bytes.NewBuffer(nil)
+    fmt.Fprintf(buffer, &amp;quot;%x&amp;quot;, h.Sum(nil))
+    return buffer.String()
+}
+&lt;/code&gt;&lt;/pre&gt;
+</description>
+    </item>
     <item>
       <title>Mysql基本sql语句优化的10个原则</title>
       <link>http://rzj.me/blog/2013/03/ten-mysql-sql-optimize-rules.html</link>
@@ -53,25 +120,6 @@ select * from t where name&amp;gt;=&amp;lsquo;de&amp;rsquo; and name&amp;lt;&amp
 
 &lt;li&gt;&lt;p&gt;不要做无谓的排序操作，尽可能在索引中完成排序&lt;/p&gt;&lt;/li&gt;
 &lt;/ol&gt;
-
-&lt;p&gt;&amp;ndash;摘自&lt;a href=&#34;http://book.douban.com/subject/20370984/&#34;&gt;《PHP核心技术与最佳实践》&lt;/a&gt;&lt;/p&gt;
-</description>
-    </item>
-    <item>
-      <title>Mysql索引建立和使用的基本原则</title>
-      <link>http://rzj.me/blog/2013/03/the-way-to-build-and-use-mysql-index.html</link>
-      <pubDate>2013-03-20 12:00:00 +0800</pubDate>
-      <description>&lt;p&gt;Mysql索引建立和使用的基本原则&lt;/p&gt;
-
-&lt;ul&gt;
-&lt;li&gt;合理设计和使用索引&lt;/li&gt;
-&lt;li&gt;在关键字段的索引上，建与不建索引，查询速度想产近100倍&lt;/li&gt;
-&lt;li&gt;差的索引和没有索引效果一样&lt;/li&gt;
-&lt;li&gt;索引并非越多越好，因为维护索引需要成本&lt;/li&gt;
-&lt;li&gt;每个表的索引应在5个以下，应合理利用部分索引和联合索引&lt;/li&gt;
-&lt;li&gt;不再结果集中的结果单一的列上建立索引。比如性别字段只有0和1两种结果集，在这个字段上建索引并不会有太多帮助&lt;/li&gt;
-&lt;li&gt;建索引的字段结果集最好分布均匀，或者符合正态分布&lt;/li&gt;
-&lt;/ul&gt;
 
 &lt;p&gt;&amp;ndash;摘自&lt;a href=&#34;http://book.douban.com/subject/20370984/&#34;&gt;《PHP核心技术与最佳实践》&lt;/a&gt;&lt;/p&gt;
 </description>
@@ -156,6 +204,25 @@ select * from t where name&amp;gt;=&amp;lsquo;de&amp;rsquo; and name&amp;lt;&amp
 &lt;li&gt;需要定期归档的数据&lt;/li&gt;
 &lt;/ol&gt;
 &lt;/blockquote&gt;
+
+&lt;p&gt;&amp;ndash;摘自&lt;a href=&#34;http://book.douban.com/subject/20370984/&#34;&gt;《PHP核心技术与最佳实践》&lt;/a&gt;&lt;/p&gt;
+</description>
+    </item>
+    <item>
+      <title>Mysql索引建立和使用的基本原则</title>
+      <link>http://rzj.me/blog/2013/03/the-way-to-build-and-use-mysql-index.html</link>
+      <pubDate>2013-03-20 12:00:00 +0800</pubDate>
+      <description>&lt;p&gt;Mysql索引建立和使用的基本原则&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;合理设计和使用索引&lt;/li&gt;
+&lt;li&gt;在关键字段的索引上，建与不建索引，查询速度想产近100倍&lt;/li&gt;
+&lt;li&gt;差的索引和没有索引效果一样&lt;/li&gt;
+&lt;li&gt;索引并非越多越好，因为维护索引需要成本&lt;/li&gt;
+&lt;li&gt;每个表的索引应在5个以下，应合理利用部分索引和联合索引&lt;/li&gt;
+&lt;li&gt;不再结果集中的结果单一的列上建立索引。比如性别字段只有0和1两种结果集，在这个字段上建索引并不会有太多帮助&lt;/li&gt;
+&lt;li&gt;建索引的字段结果集最好分布均匀，或者符合正态分布&lt;/li&gt;
+&lt;/ul&gt;
 
 &lt;p&gt;&amp;ndash;摘自&lt;a href=&#34;http://book.douban.com/subject/20370984/&#34;&gt;《PHP核心技术与最佳实践》&lt;/a&gt;&lt;/p&gt;
 </description>
