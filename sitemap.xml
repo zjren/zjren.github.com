@@ -4,6 +4,11 @@
 		<loc>http://rzj.me/</loc>
 	</url>
 	<url>
+		<loc>http://rzj.me/blog/2013/04/ten-shujujiegou.html</loc>
+		<lastmod>2013-04-18</lastmod>
+		<changefreq>weekly</changefreq>
+	</url>
+	<url>
 		<loc>http://rzj.me/blog/2013/03/golang-shorturl.html</loc>
 		<lastmod>2013-03-28</lastmod>
 		<changefreq>weekly</changefreq>
