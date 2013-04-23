@@ -3,7 +3,7 @@
   <head>
       <meta charset="utf-8">
       <meta property="wb:webmaster" content="5e2b73140864de29" />
-    <title>Mysql索引建立和使用的基本原则-蓦然回首</title>
+    <title>后缀表达式求值-蓦然回首</title>
   
     <meta name="author" content="kisspy">
     <link rel="alternate" type="application/rss+xml" title="蓦然回首" href="/rss.xml" />
@@ -96,38 +96,156 @@
 
       <div class="content">
         <div class="page-header">
-  <h1>Mysql索引建立和使用的基本原则 </h1>
+  <h1>后缀表达式求值 </h1>
 </div>
 
 <div class="row">
   <div class="span8">
-    <p>Mysql索引建立和使用的基本原则</p>
+    <p><strong>后缀表达式求值</strong></p>
 
-<ul>
-<li>合理设计和使用索引</li>
-<li>在关键字段的索引上，建与不建索引，查询速度想产近100倍</li>
-<li>差的索引和没有索引效果一样</li>
-<li>索引并非越多越好，因为维护索引需要成本</li>
-<li>每个表的索引应在5个以下，应合理利用部分索引和联合索引</li>
-<li>不再结果集中的结果单一的列上建立索引。比如性别字段只有0和1两种结果集，在这个字段上建索引并不会有太多帮助</li>
-<li>建索引的字段结果集最好分布均匀，或者符合正态分布</li>
-</ul>
+<p>题目：后缀表达式求值。<br />
+要求：输入后缀表达式，输入为整数和四则运算，输出计算结果。<br />
+例如：<br />
+输入：2 3 * 1 -<br />
+输出：5<br />
+分析：2*3-1=5</p>
 
-<p>&ndash;摘自<a href="http://book.douban.com/subject/20370984/">《PHP核心技术与最佳实践》</a></p>
+<p>输入：1 2 + 5 4 * 3 - * 6 -<br />
+输出：45<br />
+分析：（1+2）*（5*4-3）-6=45</p>
+
+<p>算法分析：<br />
+后缀表达式相对于普通的表达式来说，其优点在于不需要括号。所以方便的计算机的处理，通常对于后缀表达式才用栈的数据结构来实现，从左往右扫描表达式，如果遇到的是数字，则把数字压入栈中；若遇到的是运算符号，则提取栈的的2个元素进行计算，将计算结果压栈，若最后栈内只剩下一个数字，这就是后缀表达式的计算结果。</p>
+
+<p>代码实现：</p>
+
+<p><strong>PHP版</strong></p>
+
+<pre><code>&lt;?php
+//获取后缀表达式的值
+function getPostfixExpValue($input)
+{
+    $stack = array();
+
+    $arr = explode(&quot; &quot;,$input);
+    $len = sizeof($arr);
+    if($len&lt;3){
+        return &quot;错误的表达式&quot;;        
+    }
+    for($i=0;$i&lt;$len;$i++){
+        if(is_numeric($arr[$i])){
+            $stack[] = $arr[$i];   
+        }else if($i&lt;2 || !in_array($arr[$i],array(&quot;+&quot;,&quot;-&quot;,&quot;*&quot;,&quot;/&quot;,&quot;%&quot;))){
+            return &quot;错误的表达式&quot;;
+        }
+        else{
+            $out1 = array_pop($stack);
+            $out2 = array_pop($stack);
+            if(!is_numeric($out1) &amp;&amp; !is_numeric($out2)){
+                return &quot;错误的表达式&quot;;
+            }
+
+            $str = $out1.$arr[$i].$out2;
+            eval(&quot;\$res=&quot;.$out2.$arr[$i].$out1.&quot;;&quot;);
+            $stack[] = $res;
+        }
+    }
+    return array_pop($stack);
+}
+?&gt;
+</code></pre>
+
+<p><strong>Golang版</strong></p>
+
+<pre><code>package main
+
+import (
+    &quot;errors&quot;
+    &quot;fmt&quot;
+    &quot;regexp&quot;
+    &quot;strconv&quot;
+    &quot;strings&quot;
+)
+
+func GetPostfixExpValue(str string) (res int, err error) {
+
+    _, err = regexp.MatchString(&quot;^((\\d+|[+*\\/%-])\\s){2,}([+*\\/%-])$&quot;, str)
+    if err != nil {
+        return 0, err
+    }
+
+    arr := strings.Split(str, &quot; &quot;)
+    stack := make(map[int]int)
+    for _, val := range arr {
+
+        ok, _ := regexp.MatchString(&quot;^\\d+$&quot;, val)
+        if ok {
+            stack[len(stack)], err = strconv.Atoi(val)
+            if err != nil {
+                return 0, nil
+            }
+            continue
+        }
+        _, err := regexp.MatchString(&quot;^[+*/%-]$&quot;, val)
+        if err != nil {
+            return 0, err
+        }
+
+        num1 := stack[len(stack)-1]
+        num2 := stack[len(stack)-2]
+        var res int
+        switch val {
+        case &quot;+&quot;:
+            res = num1 + num2
+        case &quot;-&quot;:
+            res = num2 - num1
+        case &quot;*&quot;:
+            res = num2 * num1
+        case &quot;/&quot;:
+            res = num2 / num1
+        case &quot;%&quot;:
+            res = num2 % num1
+        default:
+            res = 0
+        }
+        delete(stack, len(stack)-1)
+        stack[len(stack)-1] = res
+    }
+    if len(stack) &gt; 1 {
+        return 0, errors.New(&quot;表达式错误&quot;)
+    }
+    total := stack[0]
+    return total, nil
+}
+
+func main() {
+    str := &quot;10 2 * 8 + 9 - 5 %&quot;
+
+    result, err := GetPostfixExpValue(str)
+    if err != nil {
+        fmt.Println(err)
+    } else {
+        fmt.Println(result)
+    }
+
+}
+</code></pre>
+
+<p>代码比较粗糙，欢迎批评指正~~</p>
 
     <hr>
     <div class="pagination">
       <ul>
         <ul>
           
-            <li class="prev"><a href="/blog/2013/03/choose-store-engine-for-mysql.html" title="Mysql常见存储引擎的特点和Mysql选择存储引擎的基本原则">&larr; Previous</a></li>
+            <li class="prev"><a href="/blog/2013/04/php5-object-and-array-serialize-diffrence.html" title="PHP5对象与数组序列化">&larr; Previous</a></li>
           
           
 
             <li><a href="/archive">Archive</a></li>
 
           
-            <li class="next"><a href="/blog/2013/03/markdown-gor-github.html" title="Markdown+Gor+Github，基于Github的免费博客诞生了">Next &rarr;</a></li>
+            <li class="next"><a href="/blog/2013/04/ten-shujujiegou.html" title="十大常用数据结构">Next &rarr;</a></li>
           
           
         </ul>
@@ -153,23 +271,19 @@
   
   <div class="span4">
     <h4>Published</h4>
-    <div class="date"><span>2013-03-20</span></div>
+    <div class="date"><span>2013-04-23</span></div>
     <br>
     <h4>Categories</h4>
     <ul class="tag_box">
     
       <li>
-  <a href="/categories/#Mysql-ref">Mysql <span>3</span></a>
+  <a href="/categories/#default-ref">default <span>2</span></a>
 </li>
     
     </ul>
     <br>
     <h4>Tags</h4>
     <ul class="tag_box">
-    
-      <li>
-  <a href="/tags/#Mysql-ref">Mysql <span>3</span></a>
-</li>
     
     </ul>
   </div>

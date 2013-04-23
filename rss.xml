@@ -3,7 +3,271 @@
   <channel>
     <title>蓦然回首</title>
     <link>http://rzj.me</link>
-    <pubDate>2013-04-18 01:15:55 +0800</pubDate>
+    <pubDate>2013-04-23 05:23:55 +0800</pubDate>
+    <item>
+      <title>PHP5对象与类</title>
+      <link>http://rzj.me/blog/2013/04/php5-object-and-class.html</link>
+      <pubDate>2013-04-23 12:00:00 +0800</pubDate>
+      <description>&lt;p&gt;&lt;strong&gt;对象的“形”&lt;/strong&gt;&lt;/p&gt;
+
+&lt;p&gt;类是我们对一组对象的描述&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;类定义了一系列的属性和方法，并提供了实际的操作方法，这些方法可以用来对属性进行加工&lt;/li&gt;
+&lt;li&gt;对象含有类属性的具体值，这就是类的实例化。正是由于属性的不同，才能区分不同的对象。&lt;/li&gt;
+&lt;li&gt;类与对象的关系似一种服务与被服务、加工与被加工的关系，具体而言，就如同原材料与流水线的关系。只需要再对象中调用类中存在的方法，就可以对类的属性进行加工，并展示其功能&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;&lt;strong&gt;对象的“本”&lt;/strong&gt;&lt;/p&gt;
+
+&lt;p&gt;在PHP5中，对象在底层的实现是采取“属性数组 + 方法数组”来实现的。&lt;/p&gt;
+
+&lt;p&gt;用map数组展示一下对象的组成&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;object = array(
+    &amp;quot;属性数组&amp;quot;
+    “类指针”=&amp;gt;array(
+        &amp;quot;类属性&amp;quot;
+        “静态属性”
+        “类常量”
+        “标准方法”
+        “魔术方法”
+        ”自定义方法表“
+    )
+)
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;对象在PHP中是使用一种zend_object_value 结构体存储的，他的定义如下&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;typedef struct _zend_object {
+    zend_class_entry * ce; //类入口
+    HashTable *properties; //属性组成的HashTable
+    HashTable *guards; //阻止递归调用
+}
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;&lt;strong&gt;对象与类&lt;/strong&gt;&lt;/p&gt;
+
+&lt;p&gt;PHP语言中对象与类的概念与两者之间的关系&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;类是定义一系列属性和操作的模板，而对象则把属性进行具体化，然后交由类来处理&lt;/li&gt;
+&lt;li&gt;对象就是数据，对象本身不包含方法。但是对象有一个“指针” 指向一个类，这个类里可以有方法。&lt;/li&gt;
+&lt;li&gt;方法描述不同属性所导致的不同表现&lt;/li&gt;
+&lt;li&gt;类和对象是不可分割的，有对象必有一个类和其对应，否则这个对象也就成了没有娘的孩子（有一个特殊情况，就是由标量进行强制类型转换的object，没有一个类与它对应。此事，PHP中一个称为“孤儿”的stdClass类就会收留这个对象）&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;&amp;ndash;摘自&lt;a href=&#34;http://book.douban.com/subject/20370984/&#34;&gt;《PHP核心技术与最佳实践》&lt;/a&gt;&lt;/p&gt;
+</description>
+    </item>
+    <item>
+      <title>PHP5对象与数组序列化</title>
+      <link>http://rzj.me/blog/2013/04/php5-object-and-array-serialize-diffrence.html</link>
+      <pubDate>2013-04-23 12:00:00 +0800</pubDate>
+      <description>&lt;p&gt;代码如下：&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;&amp;lt;?php
+class person{
+    public $name;
+    public $gender;
+    public function say(){
+     echo $this-&amp;gt;name ,&amp;quot; is a &amp;quot;,$gender;
+    }
+}
+
+class family {
+    public $people;
+    public $location;
+    public function __construct($p,$loc){
+        $this-&amp;gt;people = $p;
+        $this-&amp;gt;location = $loc;
+    }
+}
+
+$student = new person();
+$student-&amp;gt;name=&amp;quot;lilei&amp;quot;;
+$student-&amp;gt;gender=&amp;quot;male&amp;quot;;
+
+$tom = new family($student,&amp;quot;beijing&amp;quot;);
+
+echo serialize($student);
+echo &amp;quot;\n&amp;quot;;
+
+$student_arr = array(&amp;quot;name&amp;quot;=&amp;gt;&amp;quot;lilei&amp;quot;,&amp;quot;gender&amp;quot;=&amp;gt;&amp;quot;male&amp;quot;);
+echo serialize($student_arr);
+
+print_r($tom);
+echo &amp;quot;\n&amp;quot;;
+echo serialize($tom);
+
+?&amp;gt;
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;输出如下结果:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;O:6:&amp;quot;person&amp;quot;:2:{s:4:&amp;quot;name&amp;quot;;s:5:&amp;quot;lilei&amp;quot;;s:6:&amp;quot;gender&amp;quot;;s:4:&amp;quot;male&amp;quot;;}
+a:2:{s:4:&amp;quot;name&amp;quot;;s:5:&amp;quot;lilei&amp;quot;;s:6:&amp;quot;gender&amp;quot;;s:4:&amp;quot;male&amp;quot;;}family Object
+(
+    [people] =&amp;gt; person Object
+        (
+            [name] =&amp;gt; lilei
+            [gender] =&amp;gt; male
+        )
+
+    [location] =&amp;gt; beijing
+)
+
+O:6:&amp;quot;family&amp;quot;:2:{s:6:&amp;quot;people&amp;quot;;O:6:&amp;quot;person&amp;quot;:2:{s:4:&amp;quot;name&amp;quot;;s:5:&amp;quot;lilei&amp;quot;;s:6:&amp;quot;gender&amp;quot;;s:4:&amp;quot;male&amp;quot;;}s:8:&amp;quot;location&amp;quot;;s:7:&amp;quot;beijing&amp;quot;;}
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;可以看出对象与数组序列化的区别：&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;对象首字母为o,数组为a，分别是object和array的首字母&lt;/li&gt;
+&lt;li&gt;序列化的对象会附带所属的类名&lt;/li&gt;
+&lt;li&gt;当一个对象的实例变量引用其他对象时，序列化该对象时也会对引用对象进行序列化&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;&amp;ndash;摘自&lt;a href=&#34;http://book.douban.com/subject/20370984/&#34;&gt;《PHP核心技术与最佳实践》&lt;/a&gt;&lt;/p&gt;
+</description>
+    </item>
+    <item>
+      <title>后缀表达式求值</title>
+      <link>http://rzj.me/blog/2013/04/ten-data-struct-of-postfix-expression.html</link>
+      <pubDate>2013-04-23 12:00:00 +0800</pubDate>
+      <description>&lt;p&gt;&lt;strong&gt;后缀表达式求值&lt;/strong&gt;&lt;/p&gt;
+
+&lt;p&gt;题目：后缀表达式求值。&lt;br /&gt;
+要求：输入后缀表达式，输入为整数和四则运算，输出计算结果。&lt;br /&gt;
+例如：&lt;br /&gt;
+输入：2 3 * 1 -&lt;br /&gt;
+输出：5&lt;br /&gt;
+分析：2*3-1=5&lt;/p&gt;
+
+&lt;p&gt;输入：1 2 + 5 4 * 3 - * 6 -&lt;br /&gt;
+输出：45&lt;br /&gt;
+分析：（1+2）*（5*4-3）-6=45&lt;/p&gt;
+
+&lt;p&gt;算法分析：&lt;br /&gt;
+后缀表达式相对于普通的表达式来说，其优点在于不需要括号。所以方便的计算机的处理，通常对于后缀表达式才用栈的数据结构来实现，从左往右扫描表达式，如果遇到的是数字，则把数字压入栈中；若遇到的是运算符号，则提取栈的的2个元素进行计算，将计算结果压栈，若最后栈内只剩下一个数字，这就是后缀表达式的计算结果。&lt;/p&gt;
+
+&lt;p&gt;代码实现：&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;PHP版&lt;/strong&gt;&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;&amp;lt;?php
+//获取后缀表达式的值
+function getPostfixExpValue($input)
+{
+    $stack = array();
+
+    $arr = explode(&amp;quot; &amp;quot;,$input);
+    $len = sizeof($arr);
+    if($len&amp;lt;3){
+        return &amp;quot;错误的表达式&amp;quot;;        
+    }
+    for($i=0;$i&amp;lt;$len;$i++){
+        if(is_numeric($arr[$i])){
+            $stack[] = $arr[$i];   
+        }else if($i&amp;lt;2 || !in_array($arr[$i],array(&amp;quot;+&amp;quot;,&amp;quot;-&amp;quot;,&amp;quot;*&amp;quot;,&amp;quot;/&amp;quot;,&amp;quot;%&amp;quot;))){
+            return &amp;quot;错误的表达式&amp;quot;;
+        }
+        else{
+            $out1 = array_pop($stack);
+            $out2 = array_pop($stack);
+            if(!is_numeric($out1) &amp;amp;&amp;amp; !is_numeric($out2)){
+                return &amp;quot;错误的表达式&amp;quot;;
+            }
+
+            $str = $out1.$arr[$i].$out2;
+            eval(&amp;quot;\$res=&amp;quot;.$out2.$arr[$i].$out1.&amp;quot;;&amp;quot;);
+            $stack[] = $res;
+        }
+    }
+    return array_pop($stack);
+}
+?&amp;gt;
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;&lt;strong&gt;Golang版&lt;/strong&gt;&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;package main
+
+import (
+    &amp;quot;errors&amp;quot;
+    &amp;quot;fmt&amp;quot;
+    &amp;quot;regexp&amp;quot;
+    &amp;quot;strconv&amp;quot;
+    &amp;quot;strings&amp;quot;
+)
+
+func GetPostfixExpValue(str string) (res int, err error) {
+
+    _, err = regexp.MatchString(&amp;quot;^((\\d+|[+*\\/%-])\\s){2,}([+*\\/%-])$&amp;quot;, str)
+    if err != nil {
+        return 0, err
+    }
+
+    arr := strings.Split(str, &amp;quot; &amp;quot;)
+    stack := make(map[int]int)
+    for _, val := range arr {
+
+        ok, _ := regexp.MatchString(&amp;quot;^\\d+$&amp;quot;, val)
+        if ok {
+            stack[len(stack)], err = strconv.Atoi(val)
+            if err != nil {
+                return 0, nil
+            }
+            continue
+        }
+        _, err := regexp.MatchString(&amp;quot;^[+*/%-]$&amp;quot;, val)
+        if err != nil {
+            return 0, err
+        }
+
+        num1 := stack[len(stack)-1]
+        num2 := stack[len(stack)-2]
+        var res int
+        switch val {
+        case &amp;quot;+&amp;quot;:
+            res = num1 + num2
+        case &amp;quot;-&amp;quot;:
+            res = num2 - num1
+        case &amp;quot;*&amp;quot;:
+            res = num2 * num1
+        case &amp;quot;/&amp;quot;:
+            res = num2 / num1
+        case &amp;quot;%&amp;quot;:
+            res = num2 % num1
+        default:
+            res = 0
+        }
+        delete(stack, len(stack)-1)
+        stack[len(stack)-1] = res
+    }
+    if len(stack) &amp;gt; 1 {
+        return 0, errors.New(&amp;quot;表达式错误&amp;quot;)
+    }
+    total := stack[0]
+    return total, nil
+}
+
+func main() {
+    str := &amp;quot;10 2 * 8 + 9 - 5 %&amp;quot;
+
+    result, err := GetPostfixExpValue(str)
+    if err != nil {
+        fmt.Println(err)
+    } else {
+        fmt.Println(result)
+    }
+
+}
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;代码比较粗糙，欢迎批评指正~~&lt;/p&gt;
+</description>
+    </item>
     <item>
       <title>十大常用数据结构</title>
       <link>http://rzj.me/blog/2013/04/ten-shujujiegou.html</link>
@@ -181,25 +445,6 @@ select * from t where name&amp;gt;=&amp;lsquo;de&amp;rsquo; and name&amp;lt;&amp
 </description>
     </item>
     <item>
-      <title>Mysql索引建立和使用的基本原则</title>
-      <link>http://rzj.me/blog/2013/03/the-way-to-build-and-use-mysql-index.html</link>
-      <pubDate>2013-03-20 12:00:00 +0800</pubDate>
-      <description>&lt;p&gt;Mysql索引建立和使用的基本原则&lt;/p&gt;
-
-&lt;ul&gt;
-&lt;li&gt;合理设计和使用索引&lt;/li&gt;
-&lt;li&gt;在关键字段的索引上，建与不建索引，查询速度想产近100倍&lt;/li&gt;
-&lt;li&gt;差的索引和没有索引效果一样&lt;/li&gt;
-&lt;li&gt;索引并非越多越好，因为维护索引需要成本&lt;/li&gt;
-&lt;li&gt;每个表的索引应在5个以下，应合理利用部分索引和联合索引&lt;/li&gt;
-&lt;li&gt;不再结果集中的结果单一的列上建立索引。比如性别字段只有0和1两种结果集，在这个字段上建索引并不会有太多帮助&lt;/li&gt;
-&lt;li&gt;建索引的字段结果集最好分布均匀，或者符合正态分布&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;&amp;ndash;摘自&lt;a href=&#34;http://book.douban.com/subject/20370984/&#34;&gt;《PHP核心技术与最佳实践》&lt;/a&gt;&lt;/p&gt;
-</description>
-    </item>
-    <item>
       <title>Mysql常见存储引擎的特点和Mysql选择存储引擎的基本原则</title>
       <link>http://rzj.me/blog/2013/03/choose-store-engine-for-mysql.html</link>
       <pubDate>2013-03-20 12:00:00 +0800</pubDate>
@@ -279,6 +524,25 @@ select * from t where name&amp;gt;=&amp;lsquo;de&amp;rsquo; and name&amp;lt;&amp
 &lt;li&gt;需要定期归档的数据&lt;/li&gt;
 &lt;/ol&gt;
 &lt;/blockquote&gt;
+
+&lt;p&gt;&amp;ndash;摘自&lt;a href=&#34;http://book.douban.com/subject/20370984/&#34;&gt;《PHP核心技术与最佳实践》&lt;/a&gt;&lt;/p&gt;
+</description>
+    </item>
+    <item>
+      <title>Mysql索引建立和使用的基本原则</title>
+      <link>http://rzj.me/blog/2013/03/the-way-to-build-and-use-mysql-index.html</link>
+      <pubDate>2013-03-20 12:00:00 +0800</pubDate>
+      <description>&lt;p&gt;Mysql索引建立和使用的基本原则&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;合理设计和使用索引&lt;/li&gt;
+&lt;li&gt;在关键字段的索引上，建与不建索引，查询速度想产近100倍&lt;/li&gt;
+&lt;li&gt;差的索引和没有索引效果一样&lt;/li&gt;
+&lt;li&gt;索引并非越多越好，因为维护索引需要成本&lt;/li&gt;
+&lt;li&gt;每个表的索引应在5个以下，应合理利用部分索引和联合索引&lt;/li&gt;
+&lt;li&gt;不再结果集中的结果单一的列上建立索引。比如性别字段只有0和1两种结果集，在这个字段上建索引并不会有太多帮助&lt;/li&gt;
+&lt;li&gt;建索引的字段结果集最好分布均匀，或者符合正态分布&lt;/li&gt;
+&lt;/ul&gt;
 
 &lt;p&gt;&amp;ndash;摘自&lt;a href=&#34;http://book.douban.com/subject/20370984/&#34;&gt;《PHP核心技术与最佳实践》&lt;/a&gt;&lt;/p&gt;
 </description>

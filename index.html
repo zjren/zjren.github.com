@@ -6,6 +6,8 @@
     <title>首页-蓦然回首</title>
   
     <meta name="author" content="kisspy">
+    <link rel="alternate" type="application/rss+xml" title="蓦然回首" href="/rss.xml" />
+
     <link rel="shortcut icon" href="/favicon.ico">
     <!-- Le HTML5 shim, for IE6-8 support of HTML elements -->
     <!--[if lt IE 9]>
@@ -101,6 +103,103 @@
 <div class="row">
   <div class="span12">
     
+<div class="post">
+  <h3 class="title"><a href="/blog/2013/04/php5-object-and-class.html">PHP5对象与类</a> <span class="date">2013-04-23</span></h3>
+
+  <p><strong>对象的“形”</strong></p>
+
+<p>类是我们对一组对象的描述</p>
+
+<ul>
+<li>类定义了一系列的属性和方法，并提供了实际的操作方法，这些方法可以用来对属性进行加工</li>
+<li>对象含有类属性的具体值，这就是类的实例化。正是由于属性的不同，才能区分不同的对象。</li>
+<li>类与对象的关系似一种服务与被服务、加工与被加工的关系，具体而言，就如同原材料与流水线的关系。只需要再对象中调用类中存在的方法，就可以对类的属性进行加工，并展示其功能</li>
+</ul>
+
+<p><strong>对象的“本”</strong></p>
+
+<p>在PHP5中，对象在底层的实现是采取“属性数组 + 方法数组”来实现的。</p>
+
+<p>用map数组展示一下对象的组成</p>
+
+<pre><code>object = array(
+    &quot;属性数组&quot;
+    “类指针”=&gt;array(
+        &quot;类属性&quot;
+        “静态属性”
+        “类常量”
+        “标准方法”
+        “魔术方法”
+        ”自定义方法表“
+    )
+)
+</code></pre>
+
+
+  <div class="more">
+    <a href="/blog/2013/04/php5-object-and-class.html" class="btn">read more..</a>
+  </div>
+</div>
+
+<div class="post">
+  <h3 class="title"><a href="/blog/2013/04/php5-object-and-array-serialize-diffrence.html">PHP5对象与数组序列化</a> <span class="date">2013-04-23</span></h3>
+
+  <p>代码如下：</p>
+
+<pre><code>&lt;?php
+class person{
+    public $name;
+    public $gender;
+    public function say(){
+     echo $this-&gt;name ,&quot; is a &quot;,$gender;
+    }
+}
+
+class family {
+    public $people;
+    public $location;
+    public function __construct($p,$loc){
+        $this-&gt;people = $p;
+        $this-&gt;location = $loc;
+    }
+}
+</code></pre>
+
+
+  <div class="more">
+    <a href="/blog/2013/04/php5-object-and-array-serialize-diffrence.html" class="btn">read more..</a>
+  </div>
+</div>
+
+<div class="post">
+  <h3 class="title"><a href="/blog/2013/04/ten-data-struct-of-postfix-expression.html">后缀表达式求值</a> <span class="date">2013-04-23</span></h3>
+
+  <p><strong>后缀表达式求值</strong></p>
+
+<p>题目：后缀表达式求值。<br />
+要求：输入后缀表达式，输入为整数和四则运算，输出计算结果。<br />
+例如：<br />
+输入：2 3 * 1 -<br />
+输出：5<br />
+分析：2*3-1=5</p>
+
+<p>输入：1 2 + 5 4 * 3 - * 6 -<br />
+输出：45<br />
+分析：（1+2）*（5*4-3）-6=45</p>
+
+<p>算法分析：<br />
+后缀表达式相对于普通的表达式来说，其优点在于不需要括号。所以方便的计算机的处理，通常对于后缀表达式才用栈的数据结构来实现，从左往右扫描表达式，如果遇到的是数字，则把数字压入栈中；若遇到的是运算符号，则提取栈的的2个元素进行计算，将计算结果压栈，若最后栈内只剩下一个数字，这就是后缀表达式的计算结果。</p>
+
+<p>代码实现：</p>
+
+<p><strong>PHP版</strong></p>
+
+
+  <div class="more">
+    <a href="/blog/2013/04/ten-data-struct-of-postfix-expression.html" class="btn">read more..</a>
+  </div>
+</div>
+
 <div class="post">
   <h3 class="title"><a href="/blog/2013/04/ten-shujujiegou.html">十大常用数据结构</a> <span class="date">2013-04-18</span></h3>
 
@@ -215,29 +314,6 @@ select * from t where name&gt;=&lsquo;de&rsquo; and name&lt;&lsquo;df&rsquo;</p>
 </div>
 
 <div class="post">
-  <h3 class="title"><a href="/blog/2013/03/the-way-to-build-and-use-mysql-index.html">Mysql索引建立和使用的基本原则</a> <span class="date">2013-03-20</span></h3>
-
-  <p>Mysql索引建立和使用的基本原则</p>
-
-<ul>
-<li>合理设计和使用索引</li>
-<li>在关键字段的索引上，建与不建索引，查询速度想产近100倍</li>
-<li>差的索引和没有索引效果一样</li>
-<li>索引并非越多越好，因为维护索引需要成本</li>
-<li>每个表的索引应在5个以下，应合理利用部分索引和联合索引</li>
-<li>不再结果集中的结果单一的列上建立索引。比如性别字段只有0和1两种结果集，在这个字段上建索引并不会有太多帮助</li>
-<li>建索引的字段结果集最好分布均匀，或者符合正态分布</li>
-</ul>
-
-<p>&ndash;摘自<a href="http://book.douban.com/subject/20370984/">《PHP核心技术与最佳实践》</a></p>
-
-
-  <div class="more">
-    <a href="/blog/2013/03/the-way-to-build-and-use-mysql-index.html" class="btn">read more..</a>
-  </div>
-</div>
-
-<div class="post">
   <h3 class="title"><a href="/blog/2013/03/choose-store-engine-for-mysql.html">Mysql常见存储引擎的特点和Mysql选择存储引擎的基本原则</a> <span class="date">2013-03-20</span></h3>
 
   <p>Mysql中常见的三种引擎特点</p>
@@ -271,6 +347,29 @@ select * from t where name&gt;=&lsquo;de&rsquo; and name&lt;&lsquo;df&rsquo;</p>
 
   <div class="more">
     <a href="/blog/2013/03/choose-store-engine-for-mysql.html" class="btn">read more..</a>
+  </div>
+</div>
+
+<div class="post">
+  <h3 class="title"><a href="/blog/2013/03/the-way-to-build-and-use-mysql-index.html">Mysql索引建立和使用的基本原则</a> <span class="date">2013-03-20</span></h3>
+
+  <p>Mysql索引建立和使用的基本原则</p>
+
+<ul>
+<li>合理设计和使用索引</li>
+<li>在关键字段的索引上，建与不建索引，查询速度想产近100倍</li>
+<li>差的索引和没有索引效果一样</li>
+<li>索引并非越多越好，因为维护索引需要成本</li>
+<li>每个表的索引应在5个以下，应合理利用部分索引和联合索引</li>
+<li>不再结果集中的结果单一的列上建立索引。比如性别字段只有0和1两种结果集，在这个字段上建索引并不会有太多帮助</li>
+<li>建索引的字段结果集最好分布均匀，或者符合正态分布</li>
+</ul>
+
+<p>&ndash;摘自<a href="http://book.douban.com/subject/20370984/">《PHP核心技术与最佳实践》</a></p>
+
+
+  <div class="more">
+    <a href="/blog/2013/03/the-way-to-build-and-use-mysql-index.html" class="btn">read more..</a>
   </div>
 </div>
 
