@@ -4,17 +4,22 @@
 		<loc>http://rzj.me/</loc>
 	</url>
 	<url>
+		<loc>http://rzj.me/blog/2013/08/how-to-block-youku-ads-under-ubuntu.html</loc>
+		<lastmod>2013-08-11</lastmod>
+		<changefreq>weekly</changefreq>
+	</url>
+	<url>
 		<loc>http://rzj.me/blog/2013/04/ten-data-struct-of-postfix-expression.html</loc>
 		<lastmod>2013-04-23</lastmod>
 		<changefreq>weekly</changefreq>
 	</url>
 	<url>
-		<loc>http://rzj.me/blog/2013/04/php5-object-and-class.html</loc>
+		<loc>http://rzj.me/blog/2013/04/php5-object-and-array-serialize-diffrence.html</loc>
 		<lastmod>2013-04-23</lastmod>
 		<changefreq>weekly</changefreq>
 	</url>
 	<url>
-		<loc>http://rzj.me/blog/2013/04/php5-object-and-array-serialize-diffrence.html</loc>
+		<loc>http://rzj.me/blog/2013/04/php5-object-and-class.html</loc>
 		<lastmod>2013-04-23</lastmod>
 		<changefreq>weekly</changefreq>
 	</url>

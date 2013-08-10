@@ -3,7 +3,7 @@
   <head>
       <meta charset="utf-8">
       <meta property="wb:webmaster" content="5e2b73140864de29" />
-    <title>首页-蓦然回首</title>
+    <title>首页-蓦然回首-蓦然回首</title>
   
     <meta name="author" content="kisspy">
     <link rel="alternate" type="application/rss+xml" title="蓦然回首" href="/rss.xml" />
@@ -99,12 +99,42 @@
       <div class="content">
         
 <div class="page-header">
-  <h1>首页 </h1>
+  <h1>首页-蓦然回首 </h1>
 </div>
 
 <div class="row">
   <div class="span12">
     
+<div class="post">
+  <h3 class="title"><a href="/blog/2013/08/how-to-block-youku-ads-under-ubuntu.html">ubuntu下屏蔽youku广告</a> <span class="date">2013-08-11</span></h3>
+
+  <p>今天你发现一个屏蔽youku广告的方法，mark一下</p>
+
+<p>编辑系统下的/etc/hosts文件，添加以下记录</p>
+
+<pre><code>127.0.0.1       atm.youku.com
+127.0.0.1       fvid.atm.youku.com
+127.0.0.1       html.atm.youku.com
+127.0.0.1       valb.atm.youku.com
+127.0.0.1       valc.atm.youku.com
+127.0.0.1       valf.atm.youku.com
+127.0.0.1       valo.atm.youku.com
+127.0.0.1       valp.atm.youku.com
+127.0.0.1       vid.atm.youku.com
+127.0.0.1       walp.atm.youku.com
+127.0.0.1       lstat.youku.com
+127.0.0.1       speed.lstat.youku.com
+127.0.0.1       static.lstat.youku.com
+127.0.0.1       urchin.lstat.youku.com
+127.0.0.1       stat.youku.com
+</code></pre>
+
+
+  <div class="more">
+    <a href="/blog/2013/08/how-to-block-youku-ads-under-ubuntu.html" class="btn">read more..</a>
+  </div>
+</div>
+
 <div class="post">
   <h3 class="title"><a href="/blog/2013/04/ten-data-struct-of-postfix-expression.html">后缀表达式求值</a> <span class="date">2013-04-23</span></h3>
 
@@ -131,6 +161,36 @@
 
   <div class="more">
     <a href="/blog/2013/04/ten-data-struct-of-postfix-expression.html" class="btn">read more..</a>
+  </div>
+</div>
+
+<div class="post">
+  <h3 class="title"><a href="/blog/2013/04/php5-object-and-array-serialize-diffrence.html">PHP5对象与数组序列化</a> <span class="date">2013-04-23</span></h3>
+
+  <p>代码如下：</p>
+
+<pre><code>&lt;?php
+class person{
+    public $name;
+    public $gender;
+    public function say(){
+     echo $this-&gt;name ,&quot; is a &quot;,$gender;
+    }
+}
+
+class family {
+    public $people;
+    public $location;
+    public function __construct($p,$loc){
+        $this-&gt;people = $p;
+        $this-&gt;location = $loc;
+    }
+}
+</code></pre>
+
+
+  <div class="more">
+    <a href="/blog/2013/04/php5-object-and-array-serialize-diffrence.html" class="btn">read more..</a>
   </div>
 </div>
 
@@ -169,36 +229,6 @@
 
   <div class="more">
     <a href="/blog/2013/04/php5-object-and-class.html" class="btn">read more..</a>
-  </div>
-</div>
-
-<div class="post">
-  <h3 class="title"><a href="/blog/2013/04/php5-object-and-array-serialize-diffrence.html">PHP5对象与数组序列化</a> <span class="date">2013-04-23</span></h3>
-
-  <p>代码如下：</p>
-
-<pre><code>&lt;?php
-class person{
-    public $name;
-    public $gender;
-    public function say(){
-     echo $this-&gt;name ,&quot; is a &quot;,$gender;
-    }
-}
-
-class family {
-    public $people;
-    public $location;
-    public function __construct($p,$loc){
-        $this-&gt;people = $p;
-        $this-&gt;location = $loc;
-    }
-}
-</code></pre>
-
-
-  <div class="more">
-    <a href="/blog/2013/04/php5-object-and-array-serialize-diffrence.html" class="btn">read more..</a>
   </div>
 </div>
 
