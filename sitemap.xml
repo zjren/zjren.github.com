@@ -4,17 +4,17 @@
 		<loc>http://rzj.me/</loc>
 	</url>
 	<url>
+		<loc>http://rzj.me/blog/2013/04/ten-data-struct-of-postfix-expression.html</loc>
+		<lastmod>2013-04-23</lastmod>
+		<changefreq>weekly</changefreq>
+	</url>
+	<url>
 		<loc>http://rzj.me/blog/2013/04/php5-object-and-class.html</loc>
 		<lastmod>2013-04-23</lastmod>
 		<changefreq>weekly</changefreq>
 	</url>
 	<url>
 		<loc>http://rzj.me/blog/2013/04/php5-object-and-array-serialize-diffrence.html</loc>
-		<lastmod>2013-04-23</lastmod>
-		<changefreq>weekly</changefreq>
-	</url>
-	<url>
-		<loc>http://rzj.me/blog/2013/04/ten-data-struct-of-postfix-expression.html</loc>
 		<lastmod>2013-04-23</lastmod>
 		<changefreq>weekly</changefreq>
 	</url>
@@ -34,12 +34,12 @@
 		<changefreq>weekly</changefreq>
 	</url>
 	<url>
-		<loc>http://rzj.me/blog/2013/03/choose-store-engine-for-mysql.html</loc>
+		<loc>http://rzj.me/blog/2013/03/the-way-to-build-and-use-mysql-index.html</loc>
 		<lastmod>2013-03-20</lastmod>
 		<changefreq>weekly</changefreq>
 	</url>
 	<url>
-		<loc>http://rzj.me/blog/2013/03/the-way-to-build-and-use-mysql-index.html</loc>
+		<loc>http://rzj.me/blog/2013/03/choose-store-engine-for-mysql.html</loc>
 		<lastmod>2013-03-20</lastmod>
 		<changefreq>weekly</changefreq>
 	</url>

@@ -8,7 +8,6 @@
     <meta name="author" content="kisspy">
     <link rel="alternate" type="application/rss+xml" title="蓦然回首" href="/rss.xml" />
 
-    <link rel="shortcut icon" href="/favicon.ico">
     <!-- Le HTML5 shim, for IE6-8 support of HTML elements -->
     <!--[if lt IE 9]>
       <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
@@ -21,6 +20,7 @@
  
 
     <!-- Le fav and touch icons -->
+    <link rel="shortcut icon" href="images/favicon.ico">
   <!-- Update these with your own images
     <link rel="shortcut icon" href="images/favicon.ico">
     <link rel="apple-touch-icon" href="images/apple-touch-icon.png">
@@ -52,13 +52,18 @@
   <li><a href="/archive">Archive</a></li>
 
 
-
             
               
 
 
   <li><a href="/tags">Tags</a></li>
 
+
+            
+              
+
+
+  <li><a href="/categories">Categories</a></li>
 
 
             
@@ -68,7 +73,6 @@
   <li><a href="/pages">Pages</a></li>
 
 
-
             
               
 
@@ -76,13 +80,11 @@
   <li><a href="/tools">Tools</a></li>
 
 
-
             
               
 
 
   <li><a href="/about">About Me</a></li>
-
 
 
             
@@ -103,6 +105,35 @@
 <div class="row">
   <div class="span12">
     
+<div class="post">
+  <h3 class="title"><a href="/blog/2013/04/ten-data-struct-of-postfix-expression.html">后缀表达式求值</a> <span class="date">2013-04-23</span></h3>
+
+  <p><strong>后缀表达式求值</strong></p>
+
+<p>题目：后缀表达式求值。<br />
+要求：输入后缀表达式，输入为整数和四则运算，输出计算结果。<br />
+例如：<br />
+输入：2 3 * 1 -<br />
+输出：5<br />
+分析：2*3-1=5</p>
+
+<p>输入：1 2 + 5 4 * 3 - * 6 -<br />
+输出：45<br />
+分析：（1+2）*（5*4-3）-6=45</p>
+
+<p>算法分析：<br />
+后缀表达式相对于普通的表达式来说，其优点在于不需要括号。所以方便的计算机的处理，通常对于后缀表达式才用栈的数据结构来实现，从左往右扫描表达式，如果遇到的是数字，则把数字压入栈中；若遇到的是运算符号，则提取栈的的2个元素进行计算，将计算结果压栈，若最后栈内只剩下一个数字，这就是后缀表达式的计算结果。</p>
+
+<p>代码实现：</p>
+
+<p><strong>PHP版</strong></p>
+
+
+  <div class="more">
+    <a href="/blog/2013/04/ten-data-struct-of-postfix-expression.html" class="btn">read more..</a>
+  </div>
+</div>
+
 <div class="post">
   <h3 class="title"><a href="/blog/2013/04/php5-object-and-class.html">PHP5对象与类</a> <span class="date">2013-04-23</span></h3>
 
@@ -168,35 +199,6 @@ class family {
 
   <div class="more">
     <a href="/blog/2013/04/php5-object-and-array-serialize-diffrence.html" class="btn">read more..</a>
-  </div>
-</div>
-
-<div class="post">
-  <h3 class="title"><a href="/blog/2013/04/ten-data-struct-of-postfix-expression.html">后缀表达式求值</a> <span class="date">2013-04-23</span></h3>
-
-  <p><strong>后缀表达式求值</strong></p>
-
-<p>题目：后缀表达式求值。<br />
-要求：输入后缀表达式，输入为整数和四则运算，输出计算结果。<br />
-例如：<br />
-输入：2 3 * 1 -<br />
-输出：5<br />
-分析：2*3-1=5</p>
-
-<p>输入：1 2 + 5 4 * 3 - * 6 -<br />
-输出：45<br />
-分析：（1+2）*（5*4-3）-6=45</p>
-
-<p>算法分析：<br />
-后缀表达式相对于普通的表达式来说，其优点在于不需要括号。所以方便的计算机的处理，通常对于后缀表达式才用栈的数据结构来实现，从左往右扫描表达式，如果遇到的是数字，则把数字压入栈中；若遇到的是运算符号，则提取栈的的2个元素进行计算，将计算结果压栈，若最后栈内只剩下一个数字，这就是后缀表达式的计算结果。</p>
-
-<p>代码实现：</p>
-
-<p><strong>PHP版</strong></p>
-
-
-  <div class="more">
-    <a href="/blog/2013/04/ten-data-struct-of-postfix-expression.html" class="btn">read more..</a>
   </div>
 </div>
 
@@ -314,6 +316,29 @@ select * from t where name&gt;=&lsquo;de&rsquo; and name&lt;&lsquo;df&rsquo;</p>
 </div>
 
 <div class="post">
+  <h3 class="title"><a href="/blog/2013/03/the-way-to-build-and-use-mysql-index.html">Mysql索引建立和使用的基本原则</a> <span class="date">2013-03-20</span></h3>
+
+  <p>Mysql索引建立和使用的基本原则</p>
+
+<ul>
+<li>合理设计和使用索引</li>
+<li>在关键字段的索引上，建与不建索引，查询速度想产近100倍</li>
+<li>差的索引和没有索引效果一样</li>
+<li>索引并非越多越好，因为维护索引需要成本</li>
+<li>每个表的索引应在5个以下，应合理利用部分索引和联合索引</li>
+<li>不再结果集中的结果单一的列上建立索引。比如性别字段只有0和1两种结果集，在这个字段上建索引并不会有太多帮助</li>
+<li>建索引的字段结果集最好分布均匀，或者符合正态分布</li>
+</ul>
+
+<p>&ndash;摘自<a href="http://book.douban.com/subject/20370984/">《PHP核心技术与最佳实践》</a></p>
+
+
+  <div class="more">
+    <a href="/blog/2013/03/the-way-to-build-and-use-mysql-index.html" class="btn">read more..</a>
+  </div>
+</div>
+
+<div class="post">
   <h3 class="title"><a href="/blog/2013/03/choose-store-engine-for-mysql.html">Mysql常见存储引擎的特点和Mysql选择存储引擎的基本原则</a> <span class="date">2013-03-20</span></h3>
 
   <p>Mysql中常见的三种引擎特点</p>
@@ -347,29 +372,6 @@ select * from t where name&gt;=&lsquo;de&rsquo; and name&lt;&lsquo;df&rsquo;</p>
 
   <div class="more">
     <a href="/blog/2013/03/choose-store-engine-for-mysql.html" class="btn">read more..</a>
-  </div>
-</div>
-
-<div class="post">
-  <h3 class="title"><a href="/blog/2013/03/the-way-to-build-and-use-mysql-index.html">Mysql索引建立和使用的基本原则</a> <span class="date">2013-03-20</span></h3>
-
-  <p>Mysql索引建立和使用的基本原则</p>
-
-<ul>
-<li>合理设计和使用索引</li>
-<li>在关键字段的索引上，建与不建索引，查询速度想产近100倍</li>
-<li>差的索引和没有索引效果一样</li>
-<li>索引并非越多越好，因为维护索引需要成本</li>
-<li>每个表的索引应在5个以下，应合理利用部分索引和联合索引</li>
-<li>不再结果集中的结果单一的列上建立索引。比如性别字段只有0和1两种结果集，在这个字段上建索引并不会有太多帮助</li>
-<li>建索引的字段结果集最好分布均匀，或者符合正态分布</li>
-</ul>
-
-<p>&ndash;摘自<a href="http://book.douban.com/subject/20370984/">《PHP核心技术与最佳实践》</a></p>
-
-
-  <div class="more">
-    <a href="/blog/2013/03/the-way-to-build-and-use-mysql-index.html" class="btn">read more..</a>
   </div>
 </div>
 
@@ -415,7 +417,7 @@ select * from t where name&gt;=&lsquo;de&rsquo; and name&lt;&lsquo;df&rsquo;</p>
 
     
 <script>
-    var _gaq=[['_setAccount','UA-39547586-1'],['_trackPageview']];
+    var _gaq=[['_setAccount','UA-123-12'],['_trackPageview']];
     (function(d,t){var g=d.createElement(t),s=d.getElementsByTagName(t)[0];
     g.src=('https:'==location.protocol?'//ssl':'//www')+'.google-analytics.com/ga.js';
     s.parentNode.insertBefore(g,s)}(document,'script'));
